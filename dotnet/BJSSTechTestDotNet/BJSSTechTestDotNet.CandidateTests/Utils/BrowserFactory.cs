@@ -7,6 +7,8 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
+using WebDriverManager;
+using WebDriverManager.DriverConfigs.Impl;
 
 namespace BJSSTechTestDotNet.CandidateTests.Utils
 {
@@ -26,6 +28,8 @@ namespace BJSSTechTestDotNet.CandidateTests.Utils
 
         private static IWebDriver GetLocalChromeDriver()
         {
+            new DriverManager().SetUpDriver(new ChromeConfig());
+
             return new ChromeDriver(
                 Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory),
                 GetChromeOptions(!Debugger.IsAttached));
@@ -33,11 +37,13 @@ namespace BJSSTechTestDotNet.CandidateTests.Utils
 
         private static IWebDriver GetChromeDriver(string hubURL)
         {
+            new DriverManager().SetUpDriver(new ChromeConfig());
             return new RemoteWebDriver(new Uri(hubURL), GetChromeOptions(true));
         }
 
         private static IWebDriver GetFirefoxDriver(string hubURL)
         {
+            new DriverManager().SetUpDriver(new FirefoxConfig());
             var options = new FirefoxOptions();
             options.AddArguments("headless", "window-size=1920,1080", "no-sandbox", "acceptInsecureCerts");
 
@@ -46,6 +52,7 @@ namespace BJSSTechTestDotNet.CandidateTests.Utils
 
         private static IWebDriver GetEdgeDriver()
         {
+            new DriverManager().SetUpDriver(new EdgeConfig());
             var options = new EdgeOptions();
             options.AddArguments("start-maximized", "no-sandbox", "auto-open-devtools-for-tabs", "ignore-certificate-errors", "log-level=3");
             return new EdgeDriver(options);
