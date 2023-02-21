@@ -30,9 +30,7 @@ namespace BJSSTechTestDotNet.CandidateTests.Utils
         {
             new DriverManager().SetUpDriver(new ChromeConfig());
 
-            return new ChromeDriver(
-                Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory),
-                GetChromeOptions(!Debugger.IsAttached));
+            return new ChromeDriver(GetChromeOptions(!Debugger.IsAttached));
         }
 
         private static IWebDriver GetChromeDriver(string hubURL)
